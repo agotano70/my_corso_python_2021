@@ -32,4 +32,4 @@ o.close()                                                       # chiusura del f
 print ('Scrittura completata sul file risultati.txt')
 
 
-# *: si può scegliere di usare "w" per aprire in scrittura o "a" per aprire in scrittura con append (quindi se scriverete qualcosa v
+
