@@ -1,0 +1,35 @@
+# questo script consente di ricercare,
+# nei dati di tipo "Log", memorizzati in un file denominato "access.log";
+# il tipo di dato richiesto in input;
+# questi dati sono generati dalle varie richieste dei server;
+# i riusltati vengono memorizzarli in un file denominato "risultati.txt"
+# GET: tipo di richiesta delle informazioni ad un Web server,
+# POST:tipo di invio dati ad un server senza mostrarli,
+
+from __future__ import unicode_literals
+
+result = []              # array che conterrà le nostre ricerche in righe
+counter = 0            	 # contatore per la fase di raccolta dati
+wcounter = 0             # contatore per la fase di scrittura su file
+
+term = input("Inserisci il tipo di dato da ricercare:")     # inserimento in input del tipo di dato da cercare
+
+with open("C:\\Users\\ago_t\\Desktop\\record_log\\access.log", "r") as f:   # apertura del file "access.log" in lettura e associazione alla variabile f (fase di lettura)
+	for l in f:
+		if term in l:
+			result.append(l.split(" "))					# splitta la riga selezionata e poi fa  l'append nell'array result
+			counter += 1
+f.close()                                               # chiusura del file  "access.log"
+
+print ('Sono stati trovati:','Tot.',counter,'Tipo:',term,', scrittura in corso...\n')
+
+with open("C:\\Users\\ago_t\\Desktop\\record_log\\risultati.txt", "w") as o:   # apertura del file dei "risultati.txt" in scrittura* e associazione alla variabile "o" (fase di scrittura)
+	for wcounter in range(counter):
+		o.write(repr(result[wcounter]) + "\n")					# conversione a stringa e scrittura su file del valore di result[wcounter]
+		wcounter += 1
+o.close()                                                       # chiusura del file "risultati.txt"
+
+print ('Scrittura completata sul file risultati.txt')
+
+
+# *: si può scegliere di usare "w" per aprire in scrittura o "a" per aprire in scrittura con append (quindi se scriverete qualcosa v
