@@ -1,0 +1,103 @@
+#rappresentazione delle risposte alle hhtp
+
+# NON TOCCARE NE SCRIVERE NULLA PRIMA 
+from __future__ import unicode_literals
+import matplotlib.pyplot as plt # import della libreria per i grafici
+from emoji import emojize
+'''
+Name script: test_http.py
+Version: 3.01
+Creator: Augusto Tano detto AGO
+
+Function: Analizza il file access.log di Apache e da in output varie informazioni  relative al 
+numero di risposte HTTP suddivise per tipologie (le più utilizzate e con percentuali)
+
+'''
+
+reshttp = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0] # variabile per le risposte HTTP
+gtotal = 0                               # totale risposte analizzate
+
+print ("|-----------------------------------------------------------|")
+print ("|   Questo script analizzerà i vari log di Apache           |")
+print ("|   restituendo a video in forma grafica varie informazioni.|")
+print ("|                                                           |")
+print ("| NB: il file di log dev'essere nella stessa cartella       |")
+print ("|     dello script per funzionare.                          |")
+print ("|-----------------------------------------------------------|")
+print (" ")
+
+print("Sto elaborando grazie !.... ")
+print('Non essere impaziente !....')
+print('Attendere prego !....')
+print(emojize(":thumbs_up:"))
+with open("C:\\Users\\ago_t\Desktop\\record_log\\access.log","r") as f:           # apertura file, analisi riga per riga e aumento contatori
+
+	for l in f:
+
+		check = l.split(' ')
+
+		if '200' in check:
+			reshttp[0] += 1
+			gtotal += 1
+		if '201' in check:
+			reshttp[1] += 1
+			gtotal += 1
+		if '204' in check:
+			reshttp[2] += 1
+			gtotal += 1
+		if '304' in check:
+			reshttp[3] += 1
+			gtotal += 1
+		if '400' in check:
+			reshttp[4] += 1
+			gtotal += 1
+		if '401' in check:
+			reshttp[5] += 1
+			gtotal += 1
+		if '403' in check:
+			reshttp[6] += 1
+			gtotal += 1
+		if '404' in check:
+			reshttp[7] += 1
+			gtotal += 1
+		if '409' in check:
+			reshttp[8] += 1
+			gtotal += 1
+		if '500' in check:
+			reshttp[9] += 1
+			gtotal += 1
+
+for count in range(len(reshttp)):    # conversione in percentuale
+		reshttp[count] = round(float((reshttp[count] * 100)) / gtotal, 3)   #arrotondamento di un numero float 
+
+# creazione etichette nel formato Nome [percentuale] (%g usato per preservare fino a 4 cifre dopo la virgola)
+labels = '200 [%g]' % reshttp[0], '201 [%g]' % reshttp[1], '204 [%g]' % reshttp[2], '304 [%g]' % reshttp[3], '400 [%g]' % reshttp[4], '401 [%g]' % reshttp[5], '403 [%g]' % reshttp[6], '404 [%g]' % reshttp[7], '409 [%g]' % reshttp[8], '500 [%g]' % reshttp[9]
+
+# colorazioni spicchi della torta
+colors = ['greenyellow', 'lime', 'limegreen', 'yellow', 'red', 'orangered', 'salmon', 'tomato', 'orangered', 'dimgrey']
+
+# grandezza spicchi della torta
+sizes = [reshttp[0], reshttp[1], reshttp[2], reshttp[3], reshttp[4], reshttp[5], reshttp[6], reshttp[7], reshttp[8], reshttp[9]]
+
+fig1, ax1 = plt.subplots()                                               # creazione subplots
+ax1.set_title('Risposte HTTP su file access.log')					     # creazione del box con il titolo del grafico
+patches, texts = ax1.pie(sizes, colors=colors, startangle=90)            # creazione torta
+ax1.legend(patches, labels, loc = "best", title = "Risposte HTTP")       # creazione legenda della torta
+ax1.axis('equal')                                                        # normalizza la torta per dargli una forma rotonda
+print('')
+print ('|--------------------------------------------------------------------------------------------------------------------------|')
+print ('|200: (OK): Richiesta HTTP andata a buon fine                                                                              |')
+print ('|201: (Created):richiesta è stata soddisfatta, restituendo la creazione di una nuova risorsa.                              |')
+print ('|204: (No Content):Il server ha processato con successo la richiesta e non restituirà nessun contenuto.                    |')
+print ('|304: (No Modified): La risorsa non è stata modificata.                                                                    |')
+print ('|400: (Bad Request):La richiesta non può essere soddisfatta a causa di errori di sintassi.                                 |')
+print ('|401: (Unauthorized):L''autenticazione è possibile ma è fallita o non può essere fornita.                                  |')
+print ('|403: (Forbidden):La richiesta è legittima ma il server si rifiuta di soddisfarla                                          |')
+print ('|404: (Not Found):La risorsa richiesta non è stata trovata ma in futuro potrebbe essere disponibile                        |')
+print ('|409: (Conflict):La richiesta non può essere portata a termine a causa di un conflitto con lo stato attuale della risorsa. |')
+print ('|500: (Internal Server Error:Messaggio di errore generico senza alcun dettaglio                                            |')
+print ('|--------------------------------------------------------------------------------------------------------------------------|')
+print(emojize(":thumbs_up:"))
+print('grazie di aver utlizzato il mio script !!')
+plt.show()                                                          # esecuzione grafico
+
